@@ -1,4 +1,5 @@
 import requests
+from urllib.parse import unquote
 from urllib.parse import parse_qsl
 
 from django.utils.http import urlencode
@@ -51,7 +52,7 @@ class OAuth2Client(object):
         data = {
             "redirect_uri": self.callback_url,
             "grant_type": "authorization_code",
-            "code": code,
+            "code": unquote(code),
         }
         if self.basic_auth:
             auth = requests.auth.HTTPBasicAuth(self.consumer_key, self.consumer_secret)
